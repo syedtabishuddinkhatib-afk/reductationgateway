@@ -1,6 +1,5 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
   description: API specification
@@ -10,6 +9,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: leads
+    description: Lead capture operations
+  - name: data
+    description: Static data endpoints
 paths:
   /healthz:
     get:
@@ -24,6 +27,115 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /submit-lead:
+    post:
+      operationId: submitLead
+      tags: [leads]
+      summary: Submit a lead
+      description: Saves lead to CSV and sends notifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadInput"
+      responses:
+        "200":
+          description: Lead submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeadResponse"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /data/services:
+    get:
+      operationId: getServices
+      tags: [data]
+      summary: Get services list
+      responses:
+        "200":
+          description: Services data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+  /data/universities:
+    get:
+      operationId: getUniversities
+      tags: [data]
+      summary: Get universities list
+      responses:
+        "200":
+          description: Universities data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/University"
+  /data/university-fees:
+    get:
+      operationId: getUniversityFees
+      tags: [data]
+      summary: Get university fees
+      responses:
+        "200":
+          description: University fees data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UniversityFee"
+  /data/consultancy-fees:
+    get:
+      operationId: getConsultancyFees
+      tags: [data]
+      summary: Get consultancy fees
+      responses:
+        "200":
+          description: Consultancy fees data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ConsultancyFee"
+  /data/testimonials:
+    get:
+      operationId: getTestimonials
+      tags: [data]
+      summary: Get testimonials
+      responses:
+        "200":
+          description: Testimonials data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+  /data/gallery:
+    get:
+      operationId: getGallery
+      tags: [data]
+      summary: Get gallery items
+      responses:
+        "200":
+          description: Gallery data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryItem"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +145,173 @@ components:
           type: string
       required:
         - status
-
+    LeadInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        country:
+          type: string
+        preferredCourse:
+          type: string
+        message:
+          type: string
+      required:
+        - fullName
+        - phone
+        - country
+        - preferredCourse
+    LeadResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        whatsappUrl:
+          type: string
+      required:
+        - success
+        - message
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+      required:
+        - id
+        - title
+        - description
+        - icon
+    University:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        logo:
+          type: string
+        courses:
+          type: array
+          items:
+            type: string
+        tuitionRange:
+          type: string
+        description:
+          type: string
+        ranking:
+          type: string
+      required:
+        - id
+        - name
+        - city
+        - courses
+        - tuitionRange
+        - description
+    UniversityFee:
+      type: object
+      properties:
+        university:
+          type: string
+        city:
+          type: string
+        course:
+          type: string
+        tuitionPerYear:
+          type: number
+        hostelFee:
+          type: number
+        totalEstimated:
+          type: number
+      required:
+        - university
+        - city
+        - course
+        - tuitionPerYear
+        - hostelFee
+        - totalEstimated
+    ConsultancyFee:
+      type: object
+      properties:
+        id:
+          type: string
+        service:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        currency:
+          type: string
+      required:
+        - id
+        - service
+        - price
+        - description
+        - currency
+    Testimonial:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        university:
+          type: string
+        country:
+          type: string
+        feedback:
+          type: string
+        course:
+          type: string
+        year:
+          type: string
+      required:
+        - id
+        - name
+        - university
+        - country
+        - feedback
+        - course
+    GalleryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [image, video, youtube]
+        src:
+          type: string
+        thumbnail:
+          type: string
+        caption:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+        - type
+        - src
+        - caption
+        - category

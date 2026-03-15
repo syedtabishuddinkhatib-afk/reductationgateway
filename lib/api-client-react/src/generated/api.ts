@@ -5,18 +5,32 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ConsultancyFee,
+  ErrorResponse,
+  GalleryItem,
+  HealthStatus,
+  LeadInput,
+  LeadResponse,
+  Service,
+  Testimonial,
+  University,
+  UniversityFee,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -92,6 +106,543 @@ export function useHealthCheck<
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Saves lead to CSV and sends notifications
+ * @summary Submit a lead
+ */
+export const getSubmitLeadUrl = () => {
+  return `/api/submit-lead`;
+};
+
+export const submitLead = async (
+  leadInput: LeadInput,
+  options?: RequestInit,
+): Promise<LeadResponse> => {
+  return customFetch<LeadResponse>(getSubmitLeadUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(leadInput),
+  });
+};
+
+export const getSubmitLeadMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitLead>>,
+    TError,
+    { data: BodyType<LeadInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitLead>>,
+  TError,
+  { data: BodyType<LeadInput> },
+  TContext
+> => {
+  const mutationKey = ["submitLead"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitLead>>,
+    { data: BodyType<LeadInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitLead(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitLeadMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitLead>>
+>;
+export type SubmitLeadMutationBody = BodyType<LeadInput>;
+export type SubmitLeadMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a lead
+ */
+export const useSubmitLead = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitLead>>,
+    TError,
+    { data: BodyType<LeadInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitLead>>,
+  TError,
+  { data: BodyType<LeadInput> },
+  TContext
+> => {
+  return useMutation(getSubmitLeadMutationOptions(options));
+};
+
+/**
+ * @summary Get services list
+ */
+export const getGetServicesUrl = () => {
+  return `/api/data/services`;
+};
+
+export const getServices = async (
+  options?: RequestInit,
+): Promise<Service[]> => {
+  return customFetch<Service[]>(getGetServicesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetServicesQueryKey = () => {
+  return [`/api/data/services`] as const;
+};
+
+export const getGetServicesQueryOptions = <
+  TData = Awaited<ReturnType<typeof getServices>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getServices>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetServicesQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getServices>>> = ({
+    signal,
+  }) => getServices({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getServices>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetServicesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getServices>>
+>;
+export type GetServicesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get services list
+ */
+
+export function useGetServices<
+  TData = Awaited<ReturnType<typeof getServices>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getServices>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetServicesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get universities list
+ */
+export const getGetUniversitiesUrl = () => {
+  return `/api/data/universities`;
+};
+
+export const getUniversities = async (
+  options?: RequestInit,
+): Promise<University[]> => {
+  return customFetch<University[]>(getGetUniversitiesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetUniversitiesQueryKey = () => {
+  return [`/api/data/universities`] as const;
+};
+
+export const getGetUniversitiesQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUniversities>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversities>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetUniversitiesQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUniversities>>> = ({
+    signal,
+  }) => getUniversities({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversities>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetUniversitiesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUniversities>>
+>;
+export type GetUniversitiesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get universities list
+ */
+
+export function useGetUniversities<
+  TData = Awaited<ReturnType<typeof getUniversities>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversities>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetUniversitiesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get university fees
+ */
+export const getGetUniversityFeesUrl = () => {
+  return `/api/data/university-fees`;
+};
+
+export const getUniversityFees = async (
+  options?: RequestInit,
+): Promise<UniversityFee[]> => {
+  return customFetch<UniversityFee[]>(getGetUniversityFeesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetUniversityFeesQueryKey = () => {
+  return [`/api/data/university-fees`] as const;
+};
+
+export const getGetUniversityFeesQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUniversityFees>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversityFees>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetUniversityFeesQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getUniversityFees>>
+  > = ({ signal }) => getUniversityFees({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversityFees>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetUniversityFeesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUniversityFees>>
+>;
+export type GetUniversityFeesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get university fees
+ */
+
+export function useGetUniversityFees<
+  TData = Awaited<ReturnType<typeof getUniversityFees>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getUniversityFees>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetUniversityFeesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get consultancy fees
+ */
+export const getGetConsultancyFeesUrl = () => {
+  return `/api/data/consultancy-fees`;
+};
+
+export const getConsultancyFees = async (
+  options?: RequestInit,
+): Promise<ConsultancyFee[]> => {
+  return customFetch<ConsultancyFee[]>(getGetConsultancyFeesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetConsultancyFeesQueryKey = () => {
+  return [`/api/data/consultancy-fees`] as const;
+};
+
+export const getGetConsultancyFeesQueryOptions = <
+  TData = Awaited<ReturnType<typeof getConsultancyFees>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getConsultancyFees>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetConsultancyFeesQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getConsultancyFees>>
+  > = ({ signal }) => getConsultancyFees({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getConsultancyFees>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetConsultancyFeesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getConsultancyFees>>
+>;
+export type GetConsultancyFeesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get consultancy fees
+ */
+
+export function useGetConsultancyFees<
+  TData = Awaited<ReturnType<typeof getConsultancyFees>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getConsultancyFees>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetConsultancyFeesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get testimonials
+ */
+export const getGetTestimonialsUrl = () => {
+  return `/api/data/testimonials`;
+};
+
+export const getTestimonials = async (
+  options?: RequestInit,
+): Promise<Testimonial[]> => {
+  return customFetch<Testimonial[]>(getGetTestimonialsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTestimonialsQueryKey = () => {
+  return [`/api/data/testimonials`] as const;
+};
+
+export const getGetTestimonialsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTestimonials>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTestimonials>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTestimonialsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTestimonials>>> = ({
+    signal,
+  }) => getTestimonials({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTestimonials>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTestimonialsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTestimonials>>
+>;
+export type GetTestimonialsQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get testimonials
+ */
+
+export function useGetTestimonials<
+  TData = Awaited<ReturnType<typeof getTestimonials>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTestimonials>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTestimonialsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get gallery items
+ */
+export const getGetGalleryUrl = () => {
+  return `/api/data/gallery`;
+};
+
+export const getGallery = async (
+  options?: RequestInit,
+): Promise<GalleryItem[]> => {
+  return customFetch<GalleryItem[]>(getGetGalleryUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetGalleryQueryKey = () => {
+  return [`/api/data/gallery`] as const;
+};
+
+export const getGetGalleryQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGallery>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getGallery>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetGalleryQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getGallery>>> = ({
+    signal,
+  }) => getGallery({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getGallery>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetGalleryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGallery>>
+>;
+export type GetGalleryQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get gallery items
+ */
+
+export function useGetGallery<
+  TData = Awaited<ReturnType<typeof getGallery>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getGallery>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetGalleryQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;

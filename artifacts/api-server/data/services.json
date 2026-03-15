@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mbbs",
+    "title": "MBBS in Russia",
+    "description": "Secure admission to top Russian medical universities with NMC-recognized MBBS programs. Affordable tuition with high-quality education and global recognition.",
+    "icon": "Stethoscope"
+  },
+  {
+    "id": "engineering",
+    "title": "Engineering Programs",
+    "description": "World-class engineering degrees in Computer Science, Mechanical, Civil, and Electrical Engineering at Russia's top technical universities.",
+    "icon": "Cog"
+  },
+  {
+    "id": "aviation",
+    "title": "Aviation Courses",
+    "description": "Pursue your dream of flying with internationally accredited aviation programs including Commercial Pilot License (CPL) and Air Traffic Management.",
+    "icon": "Plane"
+  },
+  {
+    "id": "management",
+    "title": "Business & Management",
+    "description": "MBA and Business Management programs taught by experienced faculty at Russia's leading business schools with strong industry connections.",
+    "icon": "Briefcase"
+  },
+  {
+    "id": "visa",
+    "title": "Visa Assistance",
+    "description": "Complete visa processing support including documentation preparation, application submission, and tracking for student visa to Russia.",
+    "icon": "FileCheck"
+  },
+  {
+    "id": "hostel",
+    "title": "Hostel & Accommodation",
+    "description": "Safe and comfortable hostel arrangements near your university campus with affordable monthly rates and essential amenities included.",
+    "icon": "Home"
+  },
+  {
+    "id": "airport",
+    "title": "Airport Pickup",
+    "description": "Reliable airport pickup service for new students arriving in Russia. Our representatives will meet you and guide you safely to your accommodation.",
+    "icon": "Car"
+  },
+  {
+    "id": "support",
+    "title": "Student Support in Russia",
+    "description": "Continuous on-ground support throughout your studies — from orientation and language assistance to medical help and cultural integration.",
+    "icon": "Users"
+  }
+]

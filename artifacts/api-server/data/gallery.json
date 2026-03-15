@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=400",
+    "caption": "Kazan Federal University Campus",
+    "category": "campus"
+  },
+  {
+    "id": "2",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400",
+    "caption": "Medical students in laboratory",
+    "category": "student-life"
+  },
+  {
+    "id": "3",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+    "caption": "University library and study hall",
+    "category": "campus"
+  },
+  {
+    "id": "4",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400",
+    "caption": "International student graduation ceremony",
+    "category": "student-life"
+  },
+  {
+    "id": "5",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?w=400",
+    "caption": "St. Petersburg - Peter the Great Polytechnic University",
+    "category": "campus"
+  },
+  {
+    "id": "6",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400",
+    "caption": "Students studying together",
+    "category": "student-life"
+  },
+  {
+    "id": "7",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400",
+    "caption": "Modern lecture hall",
+    "category": "campus"
+  },
+  {
+    "id": "8",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400",
+    "caption": "International students cultural event",
+    "category": "student-life"
+  },
+  {
+    "id": "9",
+    "type": "youtube",
+    "src": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    "caption": "Life as a Medical Student in Russia",
+    "category": "videos"
+  },
+  {
+    "id": "10",
+    "type": "youtube",
+    "src": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    "caption": "Hostel Tour - Student Accommodation in Kazan",
+    "category": "videos"
+  }
+]

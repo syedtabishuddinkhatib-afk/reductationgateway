@@ -6,4 +6,14 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./consultancyFee";
+export * from "./errorResponse";
+export * from "./galleryItem";
+export * from "./galleryItemType";
 export * from "./healthStatus";
+export * from "./leadInput";
+export * from "./leadResponse";
+export * from "./service";
+export * from "./testimonial";
+export * from "./university";
+export * from "./universityFee";

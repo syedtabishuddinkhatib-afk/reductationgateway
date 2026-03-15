@@ -1,0 +1,51 @@
+[
+  {
+    "id": "admission",
+    "service": "Admission Processing",
+    "price": 500,
+    "description": "Complete university application handling — eligibility check, document preparation, and submission to your chosen Russian university.",
+    "currency": "USD"
+  },
+  {
+    "id": "visa",
+    "service": "Visa Assistance",
+    "price": 300,
+    "description": "End-to-end student visa processing support including form filling, document checklist, and embassy appointment guidance.",
+    "currency": "USD"
+  },
+  {
+    "id": "documentation",
+    "service": "Documentation Support",
+    "price": 200,
+    "description": "Notarization, attestation, and translation of all required academic and personal documents for university admission.",
+    "currency": "USD"
+  },
+  {
+    "id": "invitation",
+    "service": "Invitation Letter",
+    "price": 150,
+    "description": "Official university invitation letter processing required for student visa application to the Russian embassy.",
+    "currency": "USD"
+  },
+  {
+    "id": "airport",
+    "service": "Airport Pickup",
+    "price": 100,
+    "description": "Personal reception at the Russian airport by our representative and safe transfer to your hostel or accommodation.",
+    "currency": "USD"
+  },
+  {
+    "id": "hostel",
+    "service": "Hostel Arrangement",
+    "price": 100,
+    "description": "Pre-arrival booking of verified hostel or student accommodation near your university campus.",
+    "currency": "USD"
+  },
+  {
+    "id": "support",
+    "service": "Student Support Package",
+    "price": 200,
+    "description": "Ongoing support throughout your first year — orientation, local SIM card, bank account setup, and 24/7 helpline.",
+    "currency": "USD"
+  }
+]

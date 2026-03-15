@@ -1,0 +1,82 @@
+[
+  {
+    "university": "Sechenov University",
+    "city": "Moscow",
+    "course": "MBBS",
+    "tuitionPerYear": 7000,
+    "hostelFee": 900,
+    "totalEstimated": 7900
+  },
+  {
+    "university": "Pirogov Russian NRM University",
+    "city": "Moscow",
+    "course": "MBBS",
+    "tuitionPerYear": 6500,
+    "hostelFee": 850,
+    "totalEstimated": 7350
+  },
+  {
+    "university": "Kazan Federal University",
+    "city": "Kazan",
+    "course": "MBBS",
+    "tuitionPerYear": 5000,
+    "hostelFee": 700,
+    "totalEstimated": 5700
+  },
+  {
+    "university": "Kazan Federal University",
+    "city": "Kazan",
+    "course": "Engineering",
+    "tuitionPerYear": 4500,
+    "hostelFee": 700,
+    "totalEstimated": 5200
+  },
+  {
+    "university": "Volgograd State Medical University",
+    "city": "Volgograd",
+    "course": "MBBS",
+    "tuitionPerYear": 4500,
+    "hostelFee": 650,
+    "totalEstimated": 5150
+  },
+  {
+    "university": "Altai State Medical University",
+    "city": "Barnaul",
+    "course": "MBBS",
+    "tuitionPerYear": 4000,
+    "hostelFee": 600,
+    "totalEstimated": 4600
+  },
+  {
+    "university": "Ural Federal University",
+    "city": "Yekaterinburg",
+    "course": "Engineering",
+    "tuitionPerYear": 4000,
+    "hostelFee": 650,
+    "totalEstimated": 4650
+  },
+  {
+    "university": "Ural Federal University",
+    "city": "Yekaterinburg",
+    "course": "Management",
+    "tuitionPerYear": 3800,
+    "hostelFee": 650,
+    "totalEstimated": 4450
+  },
+  {
+    "university": "Peter the Great SPbPU",
+    "city": "St. Petersburg",
+    "course": "Engineering",
+    "tuitionPerYear": 5500,
+    "hostelFee": 800,
+    "totalEstimated": 6300
+  },
+  {
+    "university": "Ulyanovsk Higher Civil Aviation School",
+    "city": "Ulyanovsk",
+    "course": "Aviation (CPL)",
+    "tuitionPerYear": 7500,
+    "hostelFee": 700,
+    "totalEstimated": 8200
+  }
+]

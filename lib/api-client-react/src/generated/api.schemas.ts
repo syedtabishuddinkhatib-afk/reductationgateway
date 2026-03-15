@@ -8,3 +8,85 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface LeadInput {
+  fullName: string;
+  phone: string;
+  email?: string;
+  country: string;
+  preferredCourse: string;
+  message?: string;
+}
+
+export interface LeadResponse {
+  success: boolean;
+  message: string;
+  whatsappUrl?: string;
+}
+
+export interface ErrorResponse {
+  error: string;
+}
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface University {
+  id: string;
+  name: string;
+  city: string;
+  logo?: string;
+  courses: string[];
+  tuitionRange: string;
+  description: string;
+  ranking?: string;
+}
+
+export interface UniversityFee {
+  university: string;
+  city: string;
+  course: string;
+  tuitionPerYear: number;
+  hostelFee: number;
+  totalEstimated: number;
+}
+
+export interface ConsultancyFee {
+  id: string;
+  service: string;
+  price: number;
+  description: string;
+  currency: string;
+}
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  university: string;
+  country: string;
+  feedback: string;
+  course: string;
+  year?: string;
+}
+
+export type GalleryItemType =
+  (typeof GalleryItemType)[keyof typeof GalleryItemType];
+
+export const GalleryItemType = {
+  image: "image",
+  video: "video",
+  youtube: "youtube",
+} as const;
+
+export interface GalleryItem {
+  id: string;
+  type: GalleryItemType;
+  src: string;
+  thumbnail?: string;
+  caption: string;
+  category: string;
+}

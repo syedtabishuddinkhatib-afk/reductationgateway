@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For page transitions and scroll-triggered animations"
+  "react-hook-form": "For robust form state management in the lead capture form"
+  "@hookform/resolvers": "For Zod validation integration with react-hook-form"
+
+images:
+  - path: "artifacts/nextstoprussia/public/images/hero-bg.png"
+    description: "Majestic and imposing view of a classic Russian university building like Moscow State University, beautiful golden hour lighting, professional, high quality, 8k resolution, suitable for a hero background"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nextstoprussia/public/images/dr-jabroot.png"
+    description: "A professional and friendly doctor in a white coat, looking approachable and trustworthy, standing in a modern clinic or academic environment, soft lighting"
+    aspect_ratio: "3:4"
+  - path: "artifacts/nextstoprussia/public/images/logo.png"
+    description: "A modern, minimalist, professional education consultancy logo combining a graduation cap, globe, and a medical cross in deep blue and gold. White background."
+    aspect_ratio: "16:9"
+
+notes:
+  - Using framer-motion for all scroll animations to give a premium feel
+  - Assuming UI components like Button, Card, Badge exist in @/components/ui/
+  - API hooks are imported from @workspace/api-client-react

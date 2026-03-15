@@ -1,0 +1,82 @@
+[
+  {
+    "id": "kazan-federal",
+    "name": "Kazan Federal University",
+    "city": "Kazan",
+    "logo": "",
+    "courses": ["MBBS", "Engineering", "Management"],
+    "tuitionRange": "$4,500 - $6,000/yr",
+    "description": "One of Russia's oldest and most prestigious universities, recognized by WHO, NMC, and ECFMG. Excellent medical faculty and modern facilities.",
+    "ranking": "Top 10 in Russia"
+  },
+  {
+    "id": "sechenov",
+    "name": "Sechenov University",
+    "city": "Moscow",
+    "logo": "",
+    "courses": ["MBBS", "Dentistry", "Pharmacy"],
+    "tuitionRange": "$6,000 - $8,000/yr",
+    "description": "Russia's leading medical university and one of the oldest in Eastern Europe. World-class clinical training with top NMC/WHO recognition.",
+    "ranking": "#1 Medical University"
+  },
+  {
+    "id": "pirogov",
+    "name": "Pirogov Russian National Research Medical University",
+    "city": "Moscow",
+    "logo": "",
+    "courses": ["MBBS", "Pediatrics", "Nursing"],
+    "tuitionRange": "$5,500 - $7,500/yr",
+    "description": "A leading Russian medical research university with 90+ years of history, producing highly qualified doctors recognized globally.",
+    "ranking": "Top 5 Medical"
+  },
+  {
+    "id": "ural-federal",
+    "name": "Ural Federal University",
+    "city": "Yekaterinburg",
+    "logo": "",
+    "courses": ["Engineering", "Management", "IT"],
+    "tuitionRange": "$3,500 - $5,000/yr",
+    "description": "A major research university in the Urals region offering strong programs in science, technology, and business with affordable tuition fees.",
+    "ranking": "Top 15 in Russia"
+  },
+  {
+    "id": "spbpu",
+    "name": "Peter the Great St. Petersburg Polytechnic University",
+    "city": "St. Petersburg",
+    "logo": "",
+    "courses": ["Engineering", "Aviation", "Computer Science"],
+    "tuitionRange": "$4,000 - $6,500/yr",
+    "description": "Historic polytechnic university founded in 1899, recognized as one of Russia's top technical institutions with cutting-edge research facilities.",
+    "ranking": "Top 5 Technical"
+  },
+  {
+    "id": "volgograd",
+    "name": "Volgograd State Medical University",
+    "city": "Volgograd",
+    "logo": "",
+    "courses": ["MBBS", "Dentistry"],
+    "tuitionRange": "$4,000 - $5,500/yr",
+    "description": "A reputed medical university offering affordable MBBS education with NMC recognition and strong practical training at affiliated hospitals.",
+    "ranking": "Top 20 Medical"
+  },
+  {
+    "id": "altai",
+    "name": "Altai State Medical University",
+    "city": "Barnaul",
+    "logo": "",
+    "courses": ["MBBS", "Pharmacy"],
+    "tuitionRange": "$3,500 - $5,000/yr",
+    "description": "An established medical institution offering quality education at some of the most affordable rates, with an active international student community.",
+    "ranking": "Top 25 Medical"
+  },
+  {
+    "id": "ulyanovsk",
+    "name": "Ulyanovsk Higher Civil Aviation School",
+    "city": "Ulyanovsk",
+    "logo": "",
+    "courses": ["Aviation", "Air Traffic Management"],
+    "tuitionRange": "$5,000 - $8,000/yr",
+    "description": "Russia's premier civil aviation training school offering CPL, ATPL, and Air Traffic Controller programs with ICAO-recognized standards.",
+    "ranking": "#1 Aviation School"
+  }
+]

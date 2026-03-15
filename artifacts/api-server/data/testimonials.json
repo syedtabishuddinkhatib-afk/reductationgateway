@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Ahmed Hassan",
+    "university": "Kazan Federal University",
+    "country": "Pakistan",
+    "feedback": "Dr. Jabroot and his team made my dream of studying MBBS in Russia a reality. The entire process from application to arriving in Kazan was seamless. I highly recommend NextStopRussia to anyone serious about studying medicine abroad.",
+    "course": "MBBS",
+    "year": "2022"
+  },
+  {
+    "id": "2",
+    "name": "Fatima Al-Rashidi",
+    "university": "Sechenov University",
+    "country": "UAE",
+    "feedback": "Excellent service from start to finish! The team handled my visa, hostel, and airport pickup without any hassle. Dr. Khatib personally guided me through university selection. Now I'm in my 3rd year at Sechenov and loving every moment.",
+    "course": "MBBS",
+    "year": "2021"
+  },
+  {
+    "id": "3",
+    "name": "Raj Patel",
+    "university": "Ural Federal University",
+    "country": "India",
+    "feedback": "I wanted to study Engineering in Europe but couldn't afford the fees. NextStopRussia showed me the option of Ural Federal University and it changed my life. World-class education at a fraction of Western prices. Forever grateful!",
+    "course": "Engineering",
+    "year": "2023"
+  },
+  {
+    "id": "4",
+    "name": "Amina Kofi",
+    "university": "Volgograd State Medical University",
+    "country": "Ghana",
+    "feedback": "The team was responsive, professional, and genuinely cared about my wellbeing. They connected me with other Ghanaian students already in Volgograd which made my transition much easier. The support after arrival was exceptional.",
+    "course": "MBBS",
+    "year": "2022"
+  },
+  {
+    "id": "5",
+    "name": "Muhammad Bilal",
+    "university": "Ulyanovsk Higher Civil Aviation School",
+    "country": "Bangladesh",
+    "feedback": "I'm living my dream of becoming a commercial pilot! NextStopRussia guided me to the best aviation school in Russia. The admission process was quick and the team supported me at every step. Dr. Khatib is truly an expert consultant.",
+    "course": "Aviation (CPL)",
+    "year": "2023"
+  },
+  {
+    "id": "6",
+    "name": "Zanele Dlamini",
+    "university": "Peter the Great SPbPU",
+    "country": "South Africa",
+    "feedback": "St. Petersburg is a beautiful city and SPbPU is an incredible university. NextStopRussia made the whole relocation stress-free. I especially appreciated the student support package which helped me settle in quickly.",
+    "course": "Computer Science",
+    "year": "2021"
+  }
+]

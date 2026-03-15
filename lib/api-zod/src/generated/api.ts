@@ -14,3 +14,104 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Saves lead to CSV and sends notifications
+ * @summary Submit a lead
+ */
+export const SubmitLeadBody = zod.object({
+  fullName: zod.string(),
+  phone: zod.string(),
+  email: zod.string().optional(),
+  country: zod.string(),
+  preferredCourse: zod.string(),
+  message: zod.string().optional(),
+});
+
+export const SubmitLeadResponse = zod.object({
+  success: zod.boolean(),
+  message: zod.string(),
+  whatsappUrl: zod.string().optional(),
+});
+
+/**
+ * @summary Get services list
+ */
+export const GetServicesResponseItem = zod.object({
+  id: zod.string(),
+  title: zod.string(),
+  description: zod.string(),
+  icon: zod.string(),
+});
+export const GetServicesResponse = zod.array(GetServicesResponseItem);
+
+/**
+ * @summary Get universities list
+ */
+export const GetUniversitiesResponseItem = zod.object({
+  id: zod.string(),
+  name: zod.string(),
+  city: zod.string(),
+  logo: zod.string().optional(),
+  courses: zod.array(zod.string()),
+  tuitionRange: zod.string(),
+  description: zod.string(),
+  ranking: zod.string().optional(),
+});
+export const GetUniversitiesResponse = zod.array(GetUniversitiesResponseItem);
+
+/**
+ * @summary Get university fees
+ */
+export const GetUniversityFeesResponseItem = zod.object({
+  university: zod.string(),
+  city: zod.string(),
+  course: zod.string(),
+  tuitionPerYear: zod.number(),
+  hostelFee: zod.number(),
+  totalEstimated: zod.number(),
+});
+export const GetUniversityFeesResponse = zod.array(
+  GetUniversityFeesResponseItem,
+);
+
+/**
+ * @summary Get consultancy fees
+ */
+export const GetConsultancyFeesResponseItem = zod.object({
+  id: zod.string(),
+  service: zod.string(),
+  price: zod.number(),
+  description: zod.string(),
+  currency: zod.string(),
+});
+export const GetConsultancyFeesResponse = zod.array(
+  GetConsultancyFeesResponseItem,
+);
+
+/**
+ * @summary Get testimonials
+ */
+export const GetTestimonialsResponseItem = zod.object({
+  id: zod.string(),
+  name: zod.string(),
+  university: zod.string(),
+  country: zod.string(),
+  feedback: zod.string(),
+  course: zod.string(),
+  year: zod.string().optional(),
+});
+export const GetTestimonialsResponse = zod.array(GetTestimonialsResponseItem);
+
+/**
+ * @summary Get gallery items
+ */
+export const GetGalleryResponseItem = zod.object({
+  id: zod.string(),
+  type: zod.enum(["image", "video", "youtube"]),
+  src: zod.string(),
+  thumbnail: zod.string().optional(),
+  caption: zod.string(),
+  category: zod.string(),
+});
+export const GetGalleryResponse = zod.array(GetGalleryResponseItem);
