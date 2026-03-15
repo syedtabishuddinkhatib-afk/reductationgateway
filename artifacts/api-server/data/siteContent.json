@@ -1,0 +1,28 @@
+{
+  "hero": {
+    "announcement": "Admissions for 2025-2026 are Open",
+    "title": "NextStopRussia",
+    "tagline": "Your Gateway to Studying in Russia",
+    "subtitle": "Expert guidance for international students. Secure your admission in top Russian universities for MBBS, Engineering, Aviation, and Management programs.",
+    "whatsappNumber": "+79000000000",
+    "telegramLink": "https://t.me/nextstoprussia"
+  },
+  "about": {
+    "founderName": "Dr. Jabroot Khatib",
+    "founderTitle": "Founder & Head Consultant",
+    "bio": "Dr. Jabroot Khatib is an MBBS graduate from one of Russia's top medical universities in Moscow. With over a decade of personal experience navigating the Russian education system as an international student, he founded NextStopRussia to simplify the admission journey for students worldwide. His deep understanding of Russian universities, visa requirements, and student life makes him the most trusted consultant for aspiring doctors, engineers, aviators, and business professionals.",
+    "experience": "10+",
+    "studentsPlaced": "500+",
+    "partnerUniversities": "20+",
+    "countriesServed": "30+",
+    "successRate": "98%"
+  },
+  "contact": {
+    "email": "info@nextstoprussia.com",
+    "phone": "+7-900-000-0000",
+    "address": "Moscow, Russia — International Student Office",
+    "whatsappNumber": "+79000000000",
+    "telegramUsername": "nextstoprussia",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.3587098393956!2d37.6175!3d55.7558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDQ1JzIxLjAiTiAzN8KwMzcnMDMuMCJF!5e0!3m2!1sen!2s!4v1234567890"
+  }
+}

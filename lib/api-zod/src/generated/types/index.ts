@@ -6,6 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./adminLoginInput";
+export * from "./adminLoginResponse";
 export * from "./consultancyFee";
 export * from "./errorResponse";
 export * from "./galleryItem";
@@ -14,6 +16,10 @@ export * from "./healthStatus";
 export * from "./leadInput";
 export * from "./leadResponse";
 export * from "./service";
+export * from "./siteContent";
+export * from "./siteContentAbout";
+export * from "./siteContentContact";
+export * from "./siteContentHero";
 export * from "./testimonial";
 export * from "./university";
 export * from "./universityFee";

@@ -13,13 +13,14 @@ tags:
     description: Lead capture operations
   - name: data
     description: Static data endpoints
+  - name: admin
+    description: Admin panel operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -32,7 +33,6 @@ paths:
       operationId: submitLead
       tags: [leads]
       summary: Submit a lead
-      description: Saves lead to CSV and sends notifications
       requestBody:
         required: true
         content:
@@ -136,6 +136,42 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/GalleryItem"
+  /data/site-content:
+    get:
+      operationId: getSiteContent
+      tags: [data]
+      summary: Get site content settings
+      responses:
+        "200":
+          description: Site content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteContent"
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginInput"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -315,3 +351,85 @@ components:
         - src
         - caption
         - category
+    SiteContent:
+      type: object
+      properties:
+        hero:
+          type: object
+          properties:
+            announcement:
+              type: string
+            title:
+              type: string
+            tagline:
+              type: string
+            subtitle:
+              type: string
+            whatsappNumber:
+              type: string
+            telegramLink:
+              type: string
+          required: [announcement, title, tagline, subtitle]
+        about:
+          type: object
+          properties:
+            founderName:
+              type: string
+            founderTitle:
+              type: string
+            bio:
+              type: string
+            experience:
+              type: string
+            studentsPlaced:
+              type: string
+            partnerUniversities:
+              type: string
+            countriesServed:
+              type: string
+            successRate:
+              type: string
+          required: [founderName, founderTitle, bio]
+        contact:
+          type: object
+          properties:
+            email:
+              type: string
+            phone:
+              type: string
+            address:
+              type: string
+            whatsappNumber:
+              type: string
+            telegramUsername:
+              type: string
+            mapEmbedUrl:
+              type: string
+          required: [email, phone, address]
+      required:
+        - hero
+        - about
+        - contact
+    AdminLoginInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    AdminLoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        token:
+          type: string
+        message:
+          type: string
+      required:
+        - success
+        - token
+        - message

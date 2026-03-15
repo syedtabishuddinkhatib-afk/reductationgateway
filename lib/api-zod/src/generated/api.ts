@@ -8,7 +8,6 @@
 import * as zod from "zod";
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({
@@ -16,7 +15,6 @@ export const HealthCheckResponse = zod.object({
 });
 
 /**
- * Saves lead to CSV and sends notifications
  * @summary Submit a lead
  */
 export const SubmitLeadBody = zod.object({
@@ -115,3 +113,49 @@ export const GetGalleryResponseItem = zod.object({
   category: zod.string(),
 });
 export const GetGalleryResponse = zod.array(GetGalleryResponseItem);
+
+/**
+ * @summary Get site content settings
+ */
+export const GetSiteContentResponse = zod.object({
+  hero: zod.object({
+    announcement: zod.string(),
+    title: zod.string(),
+    tagline: zod.string(),
+    subtitle: zod.string(),
+    whatsappNumber: zod.string().optional(),
+    telegramLink: zod.string().optional(),
+  }),
+  about: zod.object({
+    founderName: zod.string(),
+    founderTitle: zod.string(),
+    bio: zod.string(),
+    experience: zod.string().optional(),
+    studentsPlaced: zod.string().optional(),
+    partnerUniversities: zod.string().optional(),
+    countriesServed: zod.string().optional(),
+    successRate: zod.string().optional(),
+  }),
+  contact: zod.object({
+    email: zod.string(),
+    phone: zod.string(),
+    address: zod.string(),
+    whatsappNumber: zod.string().optional(),
+    telegramUsername: zod.string().optional(),
+    mapEmbedUrl: zod.string().optional(),
+  }),
+});
+
+/**
+ * @summary Admin login
+ */
+export const AdminLoginBody = zod.object({
+  username: zod.string(),
+  password: zod.string(),
+});
+
+export const AdminLoginResponse = zod.object({
+  success: zod.boolean(),
+  token: zod.string(),
+  message: zod.string(),
+});

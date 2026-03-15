@@ -1,8 +1,17 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Plane, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGetSiteContent } from "@workspace/api-client-react";
 
 export function Hero() {
+  const { data: siteContent } = useGetSiteContent();
+
+  const announcement = siteContent?.hero?.announcement ?? "Admissions for 2025-2026 are Open";
+  const tagline = siteContent?.hero?.tagline ?? "Your Gateway to Studying in Russia";
+  const subtitle = siteContent?.hero?.subtitle ?? "Expert guidance for international students. Secure your admission in top Russian universities for MBBS, Engineering, Aviation, and Management programs.";
+  const whatsappNumber = siteContent?.hero?.whatsappNumber ?? "+79000000000";
+  const telegramLink = siteContent?.hero?.telegramLink ?? "https://t.me/nextstoprussia";
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 pt-20">
       {/* Background Image with Overlay */}
@@ -25,30 +34,39 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm font-medium mb-6 backdrop-blur-sm"
           >
             <Plane className="w-4 h-4 text-accent" />
-            Admissions for 2024-2025 are Open
+            {announcement}
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1] mb-6"
           >
-            Your Gateway to <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-accent">
-              Studying in Russia
-            </span>
+            {tagline.includes("in Russia") ? (
+              <>
+                {tagline.split("in Russia")[0]}
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-accent">
+                  in Russia
+                </span>
+              </>
+            ) : (
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-accent">
+                {tagline}
+              </span>
+            )}
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed"
           >
-            Expert guidance for international students. Secure your admission in top Russian universities for MBBS, Engineering, Aviation, and Management programs.
+            {subtitle}
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -61,12 +79,12 @@ export function Hero() {
               </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base rounded-full bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all hover:-translate-y-1">
-              <a href="https://wa.me/+79000000000" target="_blank" rel="noreferrer">
+              <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`} target="_blank" rel="noreferrer">
                 <MessageCircle className="w-5 h-5 mr-2 text-green-400" /> WhatsApp
               </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base rounded-full bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all hover:-translate-y-1">
-              <a href="https://t.me/nextstoprussia" target="_blank" rel="noreferrer">
+              <a href={telegramLink} target="_blank" rel="noreferrer">
                 <Send className="w-5 h-5 mr-2 text-blue-400" /> Telegram
               </a>
             </Button>
@@ -84,15 +102,21 @@ export function Hero() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/5 p-8 grid grid-cols-3 divide-x border border-slate-100">
             <div className="text-center px-4">
-              <div className="text-4xl font-display font-bold text-primary mb-1">500+</div>
+              <div className="text-4xl font-display font-bold text-primary mb-1">
+                {siteContent?.about?.studentsPlaced ?? "500+"}
+              </div>
               <div className="text-sm font-medium text-slate-500 uppercase tracking-wider">Students Placed</div>
             </div>
             <div className="text-center px-4">
-              <div className="text-4xl font-display font-bold text-primary mb-1">20+</div>
+              <div className="text-4xl font-display font-bold text-primary mb-1">
+                {siteContent?.about?.partnerUniversities ?? "20+"}
+              </div>
               <div className="text-sm font-medium text-slate-500 uppercase tracking-wider">Partner Universities</div>
             </div>
             <div className="text-center px-4">
-              <div className="text-4xl font-display font-bold text-primary mb-1">10+</div>
+              <div className="text-4xl font-display font-bold text-primary mb-1">
+                {siteContent?.about?.experience ?? "10+"}
+              </div>
               <div className="text-sm font-medium text-slate-500 uppercase tracking-wider">Years Experience</div>
             </div>
           </div>

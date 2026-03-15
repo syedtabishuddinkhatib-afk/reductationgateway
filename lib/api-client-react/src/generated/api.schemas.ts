@@ -90,3 +90,49 @@ export interface GalleryItem {
   caption: string;
   category: string;
 }
+
+export type SiteContentHero = {
+  announcement: string;
+  title: string;
+  tagline: string;
+  subtitle: string;
+  whatsappNumber?: string;
+  telegramLink?: string;
+};
+
+export type SiteContentAbout = {
+  founderName: string;
+  founderTitle: string;
+  bio: string;
+  experience?: string;
+  studentsPlaced?: string;
+  partnerUniversities?: string;
+  countriesServed?: string;
+  successRate?: string;
+};
+
+export type SiteContentContact = {
+  email: string;
+  phone: string;
+  address: string;
+  whatsappNumber?: string;
+  telegramUsername?: string;
+  mapEmbedUrl?: string;
+};
+
+export interface SiteContent {
+  hero: SiteContentHero;
+  about: SiteContentAbout;
+  contact: SiteContentContact;
+}
+
+export interface AdminLoginInput {
+  username: string;
+  password: string;
+}
+
+export interface AdminLoginResponse {
+  success: boolean;
+  token: string;
+  message: string;
+}

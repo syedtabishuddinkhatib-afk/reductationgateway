@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Award, GraduationCap, Globe } from "lucide-react";
+import { useGetSiteContent } from "@workspace/api-client-react";
 
 export function About() {
+  const { data: siteContent } = useGetSiteContent();
+  const founderName = siteContent?.about?.founderName ?? "Dr. Jabroot Khatib";
+  const founderTitle = siteContent?.about?.founderTitle ?? "Founder & Head Consultant";
+  const bio = siteContent?.about?.bio ?? "As an MBBS graduate from Moscow, Dr. Jabroot Khatib understands firsthand the challenges and triumphs of studying in Russia as an international student. With over a decade of experience, NextStopRussia was founded with a singular mission: to provide transparent, reliable, and comprehensive support to students seeking world-class education in Russian universities.";
+
   const features = [
     { icon: <GraduationCap className="w-6 h-6 text-primary" />, title: "MBBS Specialist", desc: "Expert guidance for medical programs" },
     { icon: <Globe className="w-6 h-6 text-primary" />, title: "International Reach", desc: "Students from 15+ countries" },
@@ -31,8 +37,8 @@ export function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/95 backdrop-blur rounded-xl p-4 shadow-lg border border-white/20">
-                  <h3 className="font-display font-bold text-xl text-slate-900">Dr. Jabroot Khatib</h3>
-                  <p className="text-primary font-medium text-sm">Founder & Head Consultant</p>
+                  <h3 className="font-display font-bold text-xl text-slate-900">{founderName}</h3>
+                  <p className="text-primary font-medium text-sm">{founderTitle}</p>
                   <p className="text-slate-500 text-sm mt-1">MBBS, Moscow</p>
                 </div>
               </div>
@@ -59,12 +65,7 @@ export function About() {
             </h2>
             
             <div className="space-y-4 text-slate-600 text-lg mb-8 leading-relaxed">
-              <p>
-                As an MBBS graduate from Moscow, <strong>Dr. Jabroot Khatib</strong> understands firsthand the challenges and triumphs of studying in Russia as an international student.
-              </p>
-              <p>
-                With over a decade of experience, NextStopRussia was founded with a singular mission: to provide transparent, reliable, and comprehensive support to students seeking world-class education in Russian universities.
-              </p>
+              <p>{bio}</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
