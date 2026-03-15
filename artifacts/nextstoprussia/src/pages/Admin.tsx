@@ -17,6 +17,7 @@ interface SiteContent {
   hero: { announcement: string; title: string; tagline: string; subtitle: string; whatsappNumber: string; telegramLink: string };
   about: { founderName: string; founderTitle: string; bio: string; experience: string; studentsPlaced: string; partnerUniversities: string; countriesServed: string; successRate: string };
   contact: { email: string; phone: string; address: string; whatsappNumber: string; telegramUsername: string; mapEmbedUrl: string };
+  notifications: { whatsappNumber: string; telegramBotToken: string; telegramChatId: string };
 }
 
 function useAdminData<T>(loader: () => Promise<T>) {
@@ -187,6 +188,58 @@ function SiteContentTab() {
           <div className="md:col-span-2">
             <Field label="Google Maps Embed URL" value={data.contact.mapEmbedUrl} onChange={(v) => update("contact", "mapEmbedUrl", v)} />
           </div>
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-base font-semibold text-slate-900 mb-1 pb-2 border-b">Lead Notifications</h3>
+        <p className="text-sm text-slate-500 mb-4">
+          Enter your WhatsApp number and Telegram bot details so that every new student inquiry is forwarded to you instantly.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp Number (with country code)</label>
+            <input
+              type="tel"
+              value={data.notifications?.whatsappNumber ?? ""}
+              onChange={(e) => update("notifications", "whatsappNumber", e.target.value)}
+              placeholder="e.g. +971501234567"
+              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            />
+            <p className="text-xs text-slate-400 mt-1">Students will be redirected to this number after submitting the form.</p>
+          </div>
+          <div />
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Telegram Bot Token</label>
+            <input
+              type="text"
+              value={data.notifications?.telegramBotToken ?? ""}
+              onChange={(e) => update("notifications", "telegramBotToken", e.target.value)}
+              placeholder="e.g. 123456789:AABBccDDeeFF..."
+              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-mono"
+            />
+            <p className="text-xs text-slate-400 mt-1">Create a bot via @BotFather on Telegram and paste the token here.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Telegram Chat ID</label>
+            <input
+              type="text"
+              value={data.notifications?.telegramChatId ?? ""}
+              onChange={(e) => update("notifications", "telegramChatId", e.target.value)}
+              placeholder="e.g. -1001234567890"
+              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-mono"
+            />
+            <p className="text-xs text-slate-400 mt-1">Your personal chat ID or a group/channel ID where the bot has been added.</p>
+          </div>
+        </div>
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-700 space-y-1">
+          <p><strong>How to set up Telegram notifications:</strong></p>
+          <ol className="list-decimal ml-4 space-y-0.5">
+            <li>Message @BotFather on Telegram → /newbot → copy the token above</li>
+            <li>Start a chat with your bot, or add it to a group</li>
+            <li>Get your Chat ID by messaging @userinfobot (personal) or @getidsbot (group)</li>
+            <li>Paste both values above and save</li>
+          </ol>
         </div>
       </section>
 

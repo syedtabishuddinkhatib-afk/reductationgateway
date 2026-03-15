@@ -7,6 +7,27 @@ import { SubmitLeadBody, SubmitLeadResponse } from "@workspace/api-zod";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.resolve(__dirname, "../../data");
 const LEADS_CSV = path.join(DATA_DIR, "leads.csv");
+const SITE_CONTENT_FILE = path.join(DATA_DIR, "siteContent.json");
+
+async function getNotificationSettings() {
+  try {
+    const raw = await fs.readFile(SITE_CONTENT_FILE, "utf-8");
+    const content = JSON.parse(raw);
+    const n = content?.notifications ?? {};
+    const c = content?.contact ?? {};
+    return {
+      whatsappNumber: n.whatsappNumber || c.whatsappNumber || process.env.WHATSAPP_NUMBER || "79000000000",
+      telegramBotToken: n.telegramBotToken || process.env.TELEGRAM_BOT_TOKEN || "",
+      telegramChatId: n.telegramChatId || process.env.TELEGRAM_CHAT_ID || "",
+    };
+  } catch {
+    return {
+      whatsappNumber: process.env.WHATSAPP_NUMBER || "79000000000",
+      telegramBotToken: process.env.TELEGRAM_BOT_TOKEN || "",
+      telegramChatId: process.env.TELEGRAM_CHAT_ID || "",
+    };
+  }
+}
 
 const CSV_HEADER = "timestamp,fullName,phone,email,country,preferredCourse,message\n";
 
@@ -61,8 +82,7 @@ async function sendTelegramNotification(lead: {
   preferredCourse: string;
   message: string;
 }) {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const { telegramBotToken: botToken, telegramChatId: chatId } = await getNotificationSettings();
 
   if (!botToken || !chatId) {
     console.log("Telegram not configured, skipping notification");
@@ -100,14 +120,14 @@ async function sendTelegramNotification(lead: {
   }
 }
 
-function buildWhatsAppUrl(lead: {
+async function buildWhatsAppUrl(lead: {
   fullName: string;
   phone: string;
   country: string;
   preferredCourse: string;
   message: string;
-}): string {
-  const whatsappNumber = process.env.WHATSAPP_NUMBER || "79000000000";
+}): Promise<string> {
+  const { whatsappNumber } = await getNotificationSettings();
   const text = encodeURIComponent(
     `Hello NextStopRussia! I am interested in studying in Russia.\n\n` +
     `Name: ${lead.fullName}\n` +
