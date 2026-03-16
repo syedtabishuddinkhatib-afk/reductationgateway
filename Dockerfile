@@ -5,10 +5,10 @@
 # ═══════════════════════════════════════════════════════════════
 
 # ── Stage 1: Builder ────────────────────────────────────────────
-FROM node:24-slim AS builder
+FROM node:20-slim AS builder
 
 # Enable corepack so pnpm is available
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10.26.1 --activate
 
 WORKDIR /app
 
@@ -40,7 +40,7 @@ RUN PORT=8080 BASE_PATH=/ NODE_ENV=production \
 
 
 # ── Stage 2: Runner ─────────────────────────────────────────────
-FROM node:24-slim AS runner
+FROM node:20-slim AS runner
 
 # Install nginx and supervisord
 RUN apt-get update && \
