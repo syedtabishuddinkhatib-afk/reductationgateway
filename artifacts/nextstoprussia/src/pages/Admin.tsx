@@ -2,16 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import {
   isLoggedIn, logout, fetchAdminData, saveAdminData,
-  fetchSiteContent, saveSiteContent, uploadImage, fetchLeads, clearLeads
+  fetchSiteContent, saveSiteContent, uploadImage, fetchLeads, clearLeads, changePassword
 } from "@/lib/adminApi";
 import { Button } from "@/components/ui/button";
 import {
   LogOut, Settings, Building2, GraduationCap, DollarSign,
   Star, Image as ImageIcon, Users, Plus, Trash2, Edit3,
-  Save, X, Upload, LayoutDashboard, FileText, Eye
+  Save, X, Upload, LayoutDashboard, FileText, Eye, EyeOff, Lock
 } from "lucide-react";
 
-type Tab = "content" | "services" | "universities" | "fees" | "testimonials" | "gallery" | "leads";
+type Tab = "content" | "services" | "universities" | "fees" | "testimonials" | "gallery" | "leads" | "security";
 
 interface SiteContent {
   hero: { announcement: string; title: string; tagline: string; subtitle: string; whatsappNumber: string; telegramLink: string };
@@ -654,6 +654,121 @@ function LeadsTab() {
   );
 }
 
+function SecurityTab({ onLogout }: { onLogout: () => void }) {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [result, setResult] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setResult(null);
+    if (newPassword !== confirmPassword) {
+      setResult({ type: "error", message: "New passwords do not match." });
+      return;
+    }
+    if (newPassword.length < 6) {
+      setResult({ type: "error", message: "New password must be at least 6 characters." });
+      return;
+    }
+    setSaving(true);
+    try {
+      const res = await changePassword(currentPassword, newPassword, newUsername || undefined);
+      if (res.success) {
+        setResult({ type: "success", message: "Credentials updated! You will be logged out now." });
+        setTimeout(() => { onLogout(); }, 2000);
+      } else {
+        setResult({ type: "error", message: res.error || "Failed to update credentials." });
+      }
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="max-w-md">
+      <div className="mb-6">
+        <h3 className="text-base font-semibold text-slate-900 mb-1">Change Login Credentials</h3>
+        <p className="text-sm text-slate-500">Update your admin username and password. You will be logged out after saving.</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">New Username (optional)</label>
+          <input
+            type="text"
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
+            placeholder="Leave blank to keep current username"
+            className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">Current Password <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <input
+              type={showCurrent ? "text" : "password"}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+              required
+              className="w-full px-3 py-2.5 pr-10 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            />
+            <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              {showCurrent ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">New Password <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <input
+              type={showNew ? "text" : "password"}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Min. 6 characters"
+              required
+              className="w-full px-3 py-2.5 pr-10 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            />
+            <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              {showNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">Confirm New Password <span className="text-red-500">*</span></label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Repeat new password"
+            required
+            className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+          />
+        </div>
+
+        {result && (
+          <div className={`px-4 py-3 rounded-lg text-sm font-medium ${result.type === "success" ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}>
+            {result.message}
+          </div>
+        )}
+
+        <Button type="submit" disabled={saving} className="gap-2 w-full">
+          <Lock className="w-4 h-4" />
+          {saving ? "Saving..." : "Update Credentials"}
+        </Button>
+      </form>
+    </div>
+  );
+}
+
 export default function Admin() {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("content");
@@ -675,6 +790,7 @@ export default function Admin() {
     { id: "testimonials", label: "Testimonials", icon: <Star className="w-4 h-4" /> },
     { id: "gallery", label: "Gallery", icon: <ImageIcon className="w-4 h-4" /> },
     { id: "leads", label: "Leads", icon: <Users className="w-4 h-4" /> },
+    { id: "security", label: "Security", icon: <Lock className="w-4 h-4" /> },
   ];
 
   return (
@@ -733,6 +849,7 @@ export default function Admin() {
               {activeTab === "testimonials" && <TestimonialsTab />}
               {activeTab === "gallery" && <GalleryTab />}
               {activeTab === "leads" && <LeadsTab />}
+              {activeTab === "security" && <SecurityTab onLogout={handleLogout} />}
             </div>
           </main>
         </div>

@@ -89,3 +89,18 @@ export async function clearLeads(): Promise<void> {
   });
   if (!res.ok) throw new Error("Failed to clear leads");
 }
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+  newUsername?: string
+): Promise<{ success: boolean; message?: string; error?: string }> {
+  const res = await fetch(`${BASE}/change-password`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({ currentPassword, newPassword, newUsername }),
+  });
+  const data = await res.json();
+  if (!res.ok) return { success: false, error: data.error };
+  return { success: true, message: data.message };
+}

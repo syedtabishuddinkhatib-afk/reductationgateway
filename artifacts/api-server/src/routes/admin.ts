@@ -10,9 +10,28 @@ const DATA_DIR = path.resolve(__dirname, "../../data");
 const UPLOADS_DIR = path.resolve(__dirname, "../../../nextstoprussia/public/images/uploads");
 const LEADS_CSV = path.join(DATA_DIR, "leads.csv");
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin";
-const ADMIN_TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || "nextstoprussia_secret_2024";
+const CREDENTIALS_FILE = path.join(DATA_DIR, "adminCredentials.json");
+
+async function getCredentials(): Promise<{ username: string; password: string }> {
+  try {
+    const raw = await fs.readFile(CREDENTIALS_FILE, "utf-8");
+    const creds = JSON.parse(raw);
+    return {
+      username: creds.username || process.env.ADMIN_USERNAME || "admin",
+      password: creds.password || process.env.ADMIN_PASSWORD || "admin",
+    };
+  } catch {
+    return {
+      username: process.env.ADMIN_USERNAME || "admin",
+      password: process.env.ADMIN_PASSWORD || "admin",
+    };
+  }
+}
+
+async function saveCredentials(username: string, password: string): Promise<void> {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.writeFile(CREDENTIALS_FILE, JSON.stringify({ username, password }, null, 2), "utf-8");
+}
 
 function generateToken(username: string): string {
   const payload = { username, exp: Date.now() + 24 * 60 * 60 * 1000 };
@@ -92,7 +111,7 @@ const upload = multer({
 
 const router: IRouter = Router();
 
-router.post("/admin/login", (req, res) => {
+router.post("/admin/login", async (req, res) => {
   try {
     const parsed = AdminLoginBody.safeParse(req.body);
     if (!parsed.success) {
@@ -100,7 +119,8 @@ router.post("/admin/login", (req, res) => {
       return;
     }
     const { username, password } = parsed.data;
-    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+    const creds = await getCredentials();
+    if (username !== creds.username || password !== creds.password) {
       res.status(401).json({ error: "Invalid username or password" });
       return;
     }
@@ -114,6 +134,31 @@ router.post("/admin/login", (req, res) => {
   } catch (err) {
     console.error("Admin login error:", err);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/admin/change-password", authMiddleware, async (req, res) => {
+  try {
+    const { currentPassword, newUsername, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      res.status(400).json({ error: "Current password and new password are required" });
+      return;
+    }
+    if (newPassword.length < 6) {
+      res.status(400).json({ error: "New password must be at least 6 characters" });
+      return;
+    }
+    const creds = await getCredentials();
+    if (currentPassword !== creds.password) {
+      res.status(401).json({ error: "Current password is incorrect" });
+      return;
+    }
+    const updatedUsername = (newUsername && newUsername.trim()) ? newUsername.trim() : creds.username;
+    await saveCredentials(updatedUsername, newPassword);
+    res.json({ success: true, message: "Credentials updated. Please log in again." });
+  } catch (err) {
+    console.error("Change password error:", err);
+    res.status(500).json({ error: "Failed to update credentials" });
   }
 });
 
