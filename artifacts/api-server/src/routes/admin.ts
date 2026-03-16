@@ -5,9 +5,11 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import { AdminLoginBody, AdminLoginResponse } from "@workspace/api-zod";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.resolve(__dirname, "../../data");
-const UPLOADS_DIR = path.resolve(__dirname, "../../../nextstoprussia/public/images/uploads");
+const _dir = path.dirname(fileURLToPath(import.meta.url));
+const DATA_DIR = process.env.DATA_DIR ||
+  path.resolve(_dir, "../../data");
+const UPLOADS_DIR = process.env.UPLOADS_DIR ||
+  path.resolve(_dir, "../../../nextstoprussia/public/images/uploads");
 const LEADS_CSV = path.join(DATA_DIR, "leads.csv");
 
 const CREDENTIALS_FILE = path.join(DATA_DIR, "adminCredentials.json");

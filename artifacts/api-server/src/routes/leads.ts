@@ -4,8 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { SubmitLeadBody, SubmitLeadResponse } from "@workspace/api-zod";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.resolve(__dirname, "../../data");
+const DATA_DIR = process.env.DATA_DIR ||
+  path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../data");
 const LEADS_CSV = path.join(DATA_DIR, "leads.csv");
 const SITE_CONTENT_FILE = path.join(DATA_DIR, "siteContent.json");
 
