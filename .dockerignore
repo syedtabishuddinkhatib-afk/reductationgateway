@@ -1,0 +1,30 @@
+# Version control
+.git
+.gitignore
+
+# Dev environment
+.replit
+replit.nix
+.local/
+.cache/
+
+# Build outputs (rebuilt inside Docker)
+artifacts/*/dist/
+artifacts/*/node_modules/
+lib/*/dist/
+lib/*/node_modules/
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Test / dev only
+artifacts/mockup-sandbox/
+
+# Secrets (use .env or Docker secrets instead)
+.env
+
+# OS
+.DS_Store
+Thumbs.db
