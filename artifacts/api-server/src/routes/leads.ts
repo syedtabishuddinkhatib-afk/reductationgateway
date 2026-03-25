@@ -162,7 +162,7 @@ router.post("/submit-lead", async (req, res) => {
     await appendLeadToCsv(leadData);
     await sendTelegramNotification(leadData);
 
-    const whatsappUrl = buildWhatsAppUrl(leadData);
+    const whatsappUrl = await buildWhatsAppUrl(leadData);
     const data = SubmitLeadResponse.parse({
       success: true,
       message: "Your application has been received! We will contact you shortly.",
