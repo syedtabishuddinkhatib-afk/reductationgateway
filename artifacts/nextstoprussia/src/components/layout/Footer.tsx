@@ -1,7 +1,14 @@
 import { GraduationCap, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "wouter";
+import { useGetSiteContent } from "@workspace/api-client-react";
 
 export function Footer() {
+  const { data: siteContent } = useGetSiteContent();
+  const phone = siteContent?.contact?.phone ?? "+7-900-000-0000";
+  const admissionsEmail = siteContent?.contact?.admissionsEmail ?? "admissions@nextstoprussia.com";
+  const address = siteContent?.contact?.address ?? "Moscow, Russia — International Student Office";
+  const copyrightText = siteContent?.contact?.copyrightText ?? "NextStopRussia | Founded by Dr. Jabroot Khatib. All rights reserved.";
+
   return (
     <footer className="bg-slate-900 text-slate-200 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,15 +65,15 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-accent mr-3 shrink-0" />
-                <span className="text-slate-400 text-sm">Moscow, Russia<br />Main Consultancy Office</span>
+                <span className="text-slate-400 text-sm">{address}</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 text-accent mr-3 shrink-0" />
-                <a href="tel:+79000000000" className="text-slate-400 hover:text-white transition-colors text-sm">+7 (900) 000-00-00</a>
+                <a href={`tel:${phone}`} className="text-slate-400 hover:text-white transition-colors text-sm">{phone}</a>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 text-accent mr-3 shrink-0" />
-                <a href="mailto:admissions@nextstoprussia.com" className="text-slate-400 hover:text-white transition-colors text-sm">admissions@nextstoprussia.com</a>
+                <a href={`mailto:${admissionsEmail}`} className="text-slate-400 hover:text-white transition-colors text-sm">{admissionsEmail}</a>
               </li>
             </ul>
           </div>
@@ -74,7 +81,7 @@ export function Footer() {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm text-center md:text-left">
-            © {new Date().getFullYear()} NextStopRussia | Founded by Dr. Jabroot Khatib. All rights reserved.
+            © {new Date().getFullYear()} {copyrightText}
           </p>
           <div className="flex gap-4">
             <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all">

@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send, Loader2 } from "lucide-react";
-import { useSubmitLead } from "@workspace/api-client-react";
+import { useSubmitLead, useGetSiteContent } from "@workspace/api-client-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +21,11 @@ type FormData = z.infer<typeof formSchema>;
 export function Contact() {
   const { toast } = useToast();
   const submitLead = useSubmitLead();
+  const { data: siteContent } = useGetSiteContent();
+  const admissionsEmail = siteContent?.contact?.admissionsEmail ?? "admissions@nextstoprussia.com";
+  const phone = siteContent?.contact?.phone ?? "+7-900-000-0000";
+  const address = siteContent?.contact?.address ?? "Moscow, Russia — International Student Office";
+  const academicYear = siteContent?.contact?.academicYear ?? "2025-2026";
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -82,7 +87,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-lg">Russia Office</h4>
-                  <p className="text-slate-600">Moscow, Russian Federation<br/>Main Consultancy Headquarters</p>
+                  <p className="text-slate-600">{address}</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -91,7 +96,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-lg">WhatsApp & Phone</h4>
-                  <a href="tel:+79000000000" className="text-slate-600 hover:text-primary transition-colors block">+7 (900) 000-00-00</a>
+                  <a href={`tel:${phone}`} className="text-slate-600 hover:text-primary transition-colors block">{phone}</a>
                 </div>
               </div>
               <div className="flex items-start">
@@ -100,7 +105,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-lg">Email Us</h4>
-                  <a href="mailto:admissions@nextstoprussia.com" className="text-slate-600 hover:text-primary transition-colors block">admissions@nextstoprussia.com</a>
+                  <a href={`mailto:${admissionsEmail}`} className="text-slate-600 hover:text-primary transition-colors block">{admissionsEmail}</a>
                 </div>
               </div>
             </div>
@@ -126,7 +131,7 @@ export function Contact() {
           >
             <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-10">
               <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">Apply Now</h3>
-              <p className="text-slate-500 mb-8">Secure your seat for the 2024-2025 academic year.</p>
+              <p className="text-slate-500 mb-8">Secure your seat for the {academicYear} academic year.</p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

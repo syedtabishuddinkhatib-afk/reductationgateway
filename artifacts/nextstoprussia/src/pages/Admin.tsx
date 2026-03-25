@@ -62,8 +62,8 @@ function SaveBar({ saving, saved, onSave }: { saving: boolean; saved: boolean; o
   );
 }
 
-function Field({ label, value, onChange, multiline = false, type = "text" }: {
-  label: string; value: string; onChange: (v: string) => void; multiline?: boolean; type?: string;
+function Field({ label, value, onChange, multiline = false, type = "text", placeholder }: {
+  label: string; value: string; onChange: (v: string) => void; multiline?: boolean; type?: string; placeholder?: string;
 }) {
   return (
     <div>
@@ -73,6 +73,7 @@ function Field({ label, value, onChange, multiline = false, type = "text" }: {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={4}
+          placeholder={placeholder}
           className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-y"
         />
       ) : (
@@ -80,6 +81,7 @@ function Field({ label, value, onChange, multiline = false, type = "text" }: {
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
           className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
         />
       )}
@@ -181,12 +183,17 @@ function SiteContentTab() {
       <section>
         <h3 className="text-base font-semibold text-slate-900 mb-4 pb-2 border-b">Contact Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Field label="Email" value={data.contact.email} onChange={(v) => update("contact", "email", v)} type="email" />
+          <Field label="General Email" value={data.contact.email} onChange={(v) => update("contact", "email", v)} type="email" />
+          <Field label="Admissions Email" value={(data.contact as Record<string, string>).admissionsEmail ?? ""} onChange={(v) => update("contact", "admissionsEmail", v)} type="email" />
           <Field label="Phone" value={data.contact.phone} onChange={(v) => update("contact", "phone", v)} />
           <Field label="WhatsApp Number" value={data.contact.whatsappNumber} onChange={(v) => update("contact", "whatsappNumber", v)} />
           <Field label="Telegram Username" value={data.contact.telegramUsername} onChange={(v) => update("contact", "telegramUsername", v)} />
+          <Field label="Current Academic Year" value={(data.contact as Record<string, string>).academicYear ?? ""} onChange={(v) => update("contact", "academicYear", v)} placeholder="e.g. 2025-2026" />
           <div className="md:col-span-2">
             <Field label="Office Address" value={data.contact.address} onChange={(v) => update("contact", "address", v)} />
+          </div>
+          <div className="md:col-span-2">
+            <Field label="Footer Copyright Text" value={(data.contact as Record<string, string>).copyrightText ?? ""} onChange={(v) => update("contact", "copyrightText", v)} placeholder="e.g. NextStopRussia | Founded by Dr. Jabroot Khatib. All rights reserved." />
           </div>
           <div className="md:col-span-2">
             <Field label="Google Maps Embed URL" value={data.contact.mapEmbedUrl} onChange={(v) => update("contact", "mapEmbedUrl", v)} />
