@@ -1,15 +1,13 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { promises as fs } from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import multer from "multer";
 import { AdminLoginBody, AdminLoginResponse } from "@workspace/api-zod";
 
-const _dir = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = process.env.DATA_DIR ||
-  path.resolve(_dir, "../../data");
+  path.resolve(process.cwd(), "data");
 const UPLOADS_DIR = process.env.UPLOADS_DIR ||
-  path.resolve(_dir, "../../../nextstoprussia/public/images/uploads");
+  path.resolve(process.cwd(), "../nextstoprussia/public/images/uploads");
 const LEADS_CSV = path.join(DATA_DIR, "leads.csv");
 
 const CREDENTIALS_FILE = path.join(DATA_DIR, "adminCredentials.json");

@@ -1,10 +1,8 @@
 import { Router, type IRouter } from "express";
 import { promises as fs } from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
-
 const DATA_DIR = process.env.DATA_DIR ||
-  path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../data");
+  path.resolve(process.cwd(), "data");
 
 const router: IRouter = Router();
 

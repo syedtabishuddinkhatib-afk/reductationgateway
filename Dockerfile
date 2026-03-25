@@ -70,6 +70,12 @@ COPY artifacts/nextstoprussia/public/opengraph.jpg /var/www/nextstoprussia/
 # ── Uploads dir (shadowed by Docker volume in production) ────────
 RUN mkdir -p ./artifacts/nextstoprussia/public/images/uploads
 
+# ── Bake path defaults so the server works even without supervisord ──
+ENV DATA_DIR=/app/artifacts/api-server/data
+ENV UPLOADS_DIR=/app/artifacts/nextstoprussia/public/images/uploads
+ENV NODE_ENV=production
+ENV PORT=3000
+
 # ── nginx & supervisord config ───────────────────────────────────
 COPY deploy/nginx.conf       /etc/nginx/nginx.conf
 COPY deploy/supervisord.conf /etc/supervisor/conf.d/nextstoprussia.conf
