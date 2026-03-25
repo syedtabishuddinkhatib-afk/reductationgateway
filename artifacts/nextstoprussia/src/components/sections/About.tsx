@@ -6,6 +6,7 @@ export function About() {
   const { data: siteContent } = useGetSiteContent();
   const founderName = siteContent?.about?.founderName ?? "Dr. Jabroot Khatib";
   const founderTitle = siteContent?.about?.founderTitle ?? "Founder & Head Consultant";
+  const founderPhoto = siteContent?.about?.founderPhoto || `${import.meta.env.BASE_URL}images/dr-jabroot.png`;
   const bio = siteContent?.about?.bio ?? "As an MBBS graduate from Moscow, Dr. Jabroot Khatib understands firsthand the challenges and triumphs of studying in Russia as an international student. With over a decade of experience, NextStopRussia was founded with a singular mission: to provide transparent, reliable, and comprehensive support to students seeking world-class education in Russian universities.";
 
   const features = [
@@ -30,8 +31,8 @@ export function About() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border-8 border-white">
               <img
-                src={`${import.meta.env.BASE_URL}images/dr-jabroot.png`}
-                alt="Dr. Jabroot Khatib"
+                src={founderPhoto}
+                alt={founderName}
                 className="w-full h-auto object-cover aspect-[3/4]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>

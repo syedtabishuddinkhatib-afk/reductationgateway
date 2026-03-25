@@ -164,6 +164,9 @@ function SiteContentTab() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Founder Name" value={data.about.founderName} onChange={(v) => update("about", "founderName", v)} />
           <Field label="Founder Title" value={data.about.founderTitle} onChange={(v) => update("about", "founderTitle", v)} />
+          <div className="md:col-span-2">
+            <ImageUploadField label="Founder Photo" value={(data.about as Record<string, string>).founderPhoto ?? ""} onChange={(v) => update("about", "founderPhoto", v)} />
+          </div>
           <Field label="Years of Experience" value={data.about.experience} onChange={(v) => update("about", "experience", v)} />
           <Field label="Students Placed" value={data.about.studentsPlaced} onChange={(v) => update("about", "studentsPlaced", v)} />
           <Field label="Partner Universities" value={data.about.partnerUniversities} onChange={(v) => update("about", "partnerUniversities", v)} />
