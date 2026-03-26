@@ -93,19 +93,24 @@ function ImageUploadField({ label, value, onChange }: { label: string; value: st
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [err, setErr] = useState("");
+  const [justUploaded, setJustUploaded] = useState(false);
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
     setErr("");
+    setJustUploaded(false);
     try {
       const url = await uploadImage(file);
       onChange(url);
+      setJustUploaded(true);
+      setTimeout(() => setJustUploaded(false), 4000);
     } catch {
-      setErr("Upload failed");
+      setErr("Upload failed. Make sure you are logged in and the file is a JPG, PNG, or WebP image.");
     } finally {
       setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
     }
   }
 
@@ -118,18 +123,30 @@ function ImageUploadField({ label, value, onChange }: { label: string; value: st
             type="text"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="Image URL or upload file"
+            placeholder="Paste image URL or click Upload"
             className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           />
         </div>
         <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={uploading} className="shrink-0">
-          <Upload className="w-4 h-4 mr-1" /> {uploading ? "..." : "Upload"}
+          <Upload className="w-4 h-4 mr-1" /> {uploading ? "Uploading..." : "Upload"}
         </Button>
-        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+        <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={handleFile} />
       </div>
       {err && <p className="text-red-500 text-xs mt-1">{err}</p>}
+      {justUploaded && (
+        <p className="text-green-600 text-xs mt-1 font-medium">Image uploaded! Click "Save Changes" below to apply it to the site.</p>
+      )}
       {value && (
-        <img src={value} alt="" className="mt-2 h-16 w-auto rounded object-cover border border-slate-100" onError={(e) => (e.currentTarget.style.display = "none")} />
+        <div className="mt-2 flex items-center gap-3">
+          <img
+            src={value}
+            alt=""
+            className="h-20 w-20 rounded-lg object-cover border border-slate-200 shadow-sm bg-slate-50"
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+            onLoad={(e) => { e.currentTarget.style.display = "block"; }}
+          />
+          {value && <p className="text-xs text-slate-400 break-all">{value}</p>}
+        </div>
       )}
     </div>
   );
